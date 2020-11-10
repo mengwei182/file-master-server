@@ -27,7 +27,7 @@ public class LoginAop {
       UserVo userVo = (UserVo) args[1];
       UserEntity user = userDao.getUserByPhoneNumber(userVo.getPhoneNumber());
       List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-      grantedAuthorities.add(new SimpleGrantedAuthority(user.getAccount()));
+      grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserName()));
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user, user.getPassword(), grantedAuthorities);
       SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
     }
