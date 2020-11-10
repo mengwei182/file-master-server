@@ -11,7 +11,7 @@
 
   <insert id="addUser" parameterType="org.example.user.controller.vo.UserVo">
     INSERT INTO `user` (user_name, phone_number, password)
-    VALUES (#{name}, #{phoneNumber}, #{password})
+    VALUES (#{userName}, #{phoneNumber}, #{password})
   </insert>
 
   <select id="getUserByUsername" parameterType="java.lang.String" resultMap="UserMap">

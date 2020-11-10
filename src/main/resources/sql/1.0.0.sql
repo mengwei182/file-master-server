@@ -3,7 +3,7 @@ CREATE TABLE `user`
   `id`           INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_name`    VARCHAR(50),
   `phone_number` VARCHAR(11),
-  `password`     VARCHAR(14)  NOT NULL,
+  `password`     VARCHAR(100) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE INDEX (user_name),
   UNIQUE INDEX (phone_number)
