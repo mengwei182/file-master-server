@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.file.repository.FileDao">
+
+  <resultMap id="FileMap" type="org.example.file.repository.entity.FileEntity">
+    <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="name" property="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="suffix_name" property="suffixName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="type" property="type" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="absolute_path" property="absolutePath" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="user_id" property="userId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="size" property="size" javaType="java.lang.Long" jdbcType="INTEGER"/>
+    <result column="deleted" property="deleted" javaType="java.lang.Boolean" jdbcType="TINYINT"/>
+    <result column="file" property="file" javaType="java.lang.Boolean" jdbcType="TINYINT"/>
+    <result column="create_time" property="createTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+    <result column="modify_time" property="modifyTime" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+  </resultMap>
+
+  <insert id="addFile" parameterType="org.example.file.repository.entity.FileEntity">
+    INSERT INTO `file` (name, suffix_name, type, absolute_path, user_id, size, deleted, file)
+    VALUES (#{name}, #{suffixName}, #{type}, #{absolutePath}, #{userId}, #{size}, #{deleted}, #{file})
+  </insert>
+
+  <select id="getFiles" parameterType="java.lang.Object" resultMap="FileMap">
+    SELECT *
+    FROM `file`
+    WHERE absolute_path = #{path}
+      AND user_id = #{userId}
+  </select>
+</mapper>

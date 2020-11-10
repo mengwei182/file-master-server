@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.user.repository.UserDao">
+
+  <resultMap id="UserMap" type="org.example.user.repository.entity.UserEntity">
+    <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    <result column="user_name" property="userName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="phone_number" property="phoneNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="password" property="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <insert id="addUser" parameterType="org.example.user.controller.vo.UserVo">
+    INSERT INTO `user` (user_name, phone_number, password)
+    VALUES (#{name}, #{phoneNumber}, #{password})
+  </insert>
+
+  <select id="getUserByUsername" parameterType="java.lang.String" resultMap="UserMap">
+    SELECT *
+    FROM `user`
+    WHERE user_name = #{userName}
+  </select>
+
+  <select id="getUserByUsernamePassword" parameterType="java.lang.String" resultMap="UserMap">
+    SELECT *
+    FROM `user`
+    WHERE user_name = #{userName}
+      AND password = #{password}
+  </select>
+
+  <select id="getUserByPhoneNumber" parameterType="java.lang.String" resultMap="UserMap">
+    SELECT *
+    FROM `user`
+    WHERE phone_number = #{phoneNumber}
+  </select>
+</mapper>

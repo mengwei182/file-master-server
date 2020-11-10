@@ -1,0 +1,16 @@
+server:
+ port: 9090
+ servlet:
+  context-path: /file-master
+  session:
+   timeout: 1800
+
+spring:
+ datasource:
+  username: root
+  password: mengwei131575585
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/file_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC&useSSL=false
+
+mybatis:
+ mapper-locations: classpath*:mappers/*.xml
