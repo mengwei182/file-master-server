@@ -9,6 +9,7 @@ import org.example.file.service.FileService;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,31 +17,34 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
   @Override
   public Result getFiles(String path) {
-    List<FileEntity> fileEntities = new ArrayList<>();
-    if (CommonUtils.isEmpty(path)) {
-      fileEntities.add(FileEntity.buildInitialFile());
-      return Result.success(fileEntities);
-    }
-
-    if (path.equals(FileEntity.DEFAULT_ROOT_PATH)) {
-      File[] rootFile = FileUtils.getRootFile();
-      if (!CommonUtils.isEmpty(rootFile)) {
-        for (File file : rootFile) {
-          FileEntity fileEntity = FileEntity.buildFileEntity(file);
-          fileEntity.setName(FileUtils.handleWindowsRootFilename(file));
-          fileEntities.add(fileEntity);
+    try {
+      List<FileEntity> fileEntities = new ArrayList<>();
+      if (CommonUtils.isEmpty(path)) {
+        fileEntities.add(FileEntity.buildInitialFile());
+        return Result.success(fileEntities);
+      }
+      if (path.equals(FileEntity.DEFAULT_ROOT_PATH)) {
+        File[] rootFile = FileUtils.getRootFile();
+        if (!CommonUtils.isEmpty(rootFile)) {
+          for (File file : rootFile) {
+            FileEntity fileEntity = FileEntity.buildFileEntity(file);
+            fileEntity.setName(FileUtils.handleWindowsRootFilename(file));
+            fileEntities.add(fileEntity);
+          }
+        }
+        return Result.success(fileEntities);
+      }
+      File[] files = FileUtils.getFiles(path);
+      if (!CommonUtils.isEmpty(files)) {
+        for (File file : files) {
+          fileEntities.add(FileEntity.buildFileEntity(file));
         }
       }
       return Result.success(fileEntities);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    File[] files = FileUtils.getFiles(path);
-    if (!CommonUtils.isEmpty(files)) {
-      for (File file : files) {
-        fileEntities.add(FileEntity.buildFileEntity(file));
-      }
-    }
-    return Result.success(fileEntities);
+    return Result.success();
   }
 
   @Override

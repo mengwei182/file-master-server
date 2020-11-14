@@ -164,7 +164,22 @@ public class FileUtils {
 
   public static File[] getFiles(String path) {
     File file = new File(path);
-    return file.listFiles();
+    return getFiles(path, true);
+  }
+
+  private static File[] getFiles(String path, boolean hidden) {
+    File file = new File(path);
+    File[] files = file.listFiles();
+    if (hidden) {
+      List<File> fileList = new ArrayList<>();
+      for (File f : files) {
+        if (!f.isHidden()) {
+          fileList.add(f);
+        }
+      }
+      return fileList.toArray(new File[]{});
+    }
+    return files;
   }
 
   public static List<String> handleWindowsRootFilename(File[] files) {

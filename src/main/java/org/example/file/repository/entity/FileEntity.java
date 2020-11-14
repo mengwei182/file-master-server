@@ -51,7 +51,7 @@ public class FileEntity {
     fileEntity.setAbsolutePath(file.getAbsolutePath());
     fileEntity.setFile(file.isFile());
     fileEntity.setSize(file.isFile() ? file.length() : -1);
-    fileEntity.setCreateTime(new Timestamp(file.lastModified()));
+    fileEntity.setModifyTime(new Timestamp(file.lastModified()));
     return fileEntity;
   }
 
